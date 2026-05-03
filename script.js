@@ -64,11 +64,30 @@ function saveStats() {
 // UI
 function updateStatsUI() {
   const winRate = stats.played === 0 ? 0 : Math.round((stats.wins / stats.played) * 100);
+  const max = Math.max(...stats.distribution, 1);
+
+  let bars = "";
+  for (let i = 0; i < 6; i++) {
+    const width = (stats.distribution[i] / max) * 100;
+
+    bars += `
+      <div class="bar-row">
+        <div class="bar-label">${i + 1}</div>
+        <div class="bar" style="width:${width}%">
+          ${stats.distribution[i]}
+        </div>
+      </div>
+    `;
+  }
 
   document.getElementById("stats").innerHTML = `
     <h3>${playerName}</h3>
     플레이: ${stats.played} | 맞힘: ${stats.wins} | 승률: ${winRate}%
     연승: ${stats.streak} (최대 ${stats.maxStreak})
+    
+    <br><br>
+    <b>분포</b>
+    ${bars}
   `;
 }
 
