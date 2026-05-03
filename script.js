@@ -375,6 +375,26 @@ async function logout() {
   location.reload();
 }
 
+const themeToggle = document.getElementById("themeToggle");
+
+// 저장된 테마 불러오기
+if (localStorage.getItem("theme") === "dark") {
+  document.body.classList.add("dark");
+}
+
+// 버튼 클릭
+themeToggle.addEventListener("click", () => {
+  document.body.classList.toggle("dark");
+
+  if (document.body.classList.contains("dark")) {
+    localStorage.setItem("theme", "dark");
+    themeToggle.textContent = "☀️ 라이트모드";
+  } else {
+    localStorage.setItem("theme", "light");
+    themeToggle.textContent = "🌙 다크모드";
+  }
+});
+
 // 전역
 window.login = login;
 window.logout = logout;
