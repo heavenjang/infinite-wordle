@@ -120,19 +120,68 @@ function createKeyboard() {
   const keyboard = document.getElementById("keyboard");
   keyboard.innerHTML = "";
 
-  const layout = ["QWERTYUIOP", "ASDFGHJKL", "ZXCVBNM"];
+  const layout = [
+    "QWERTYUIOP",
+    "ASDFGHJKL",
+    "ZXCVBNM"
+  ];
 
-  layout.forEach(rowStr => {
+  layout.forEach((rowStr, rowIndex) => {
     const row = document.createElement("div");
     row.classList.add("key-row");
 
+    // 🔥 3번째 줄이면 ENTER 먼저 추가
+    if (rowIndex === 2) {
+      const enterKey = document.createElement("div");
+      enterKey.classList.add("key");
+      enterKey.textContent = "ENTER";
+      enterKey.style.width = "60px";
+
+      enterKey.addEventListener("click", checkGuess);
+      row.appendChild(enterKey);
+    }
+
+    // 🔥 알파벳 키들
     for (let char of rowStr) {
       const key = document.createElement("div");
       key.classList.add("key");
+      key.textContent = char;
       key.id = "key-" + char;
       key.dataset.state = "";
-      key.textContent = char;
+
+      key.addEventListener("click", () => {
+        if (gameOver || isAnimating) return;
+
+        const rows = document.querySelectorAll(".row");
+
+        if (currentCol < 5) {
+          rows[currentRow].children[currentCol].textContent = char;
+          currentCol++;
+        }
+      });
+
       row.appendChild(key);
+    }
+
+    // 🔥 3번째 줄이면 BACKSPACE 마지막에 추가
+    if (rowIndex === 2) {
+      const backKey = document.createElement("div");
+      backKey.classList.add("key");
+      backKey.textContent = "⌫";
+      backKey.style.width = "60px";
+
+      backKey.addEventListener("click", () => {
+        if (gameOver || isAnimating) return;
+
+        const rows = document.querySelectorAll(".row");
+
+        if (currentCol > 0) {
+          currentCol--;
+          rows[currentRow].children[currentCol].textContent = "";
+        }
+      });
+
+      row.appendChild(backKey);
     }
 
     keyboard.appendChild(row);
