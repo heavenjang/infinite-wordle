@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>Infinite Wordle</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <button id="themeToggle">🌙 다크모드</button>
+
+  <h1>Infinite Wordle</h1>
+
+  <!-- 유저 시작 -->
+<button onclick="login()">Google로 시작</button>
+<button onclick="logout()">로그아웃</button>
+
+  <!-- 통계 -->
+  <div id="statsPanel">
+    <div id="stats"></div>
+  </div>
+  
+  <!-- 랭킹 -->
+  <div id="rankingPanel">
+    <h3>🏆 랭킹</h3>
+    <div id="rankingTabs">
+      <button onclick="loadRanking('streak')">연승</button>
+      <button onclick="loadRanking('wins')">맞힌 수</button>
+      <button onclick="loadRanking('winRate')">승률</button>
+    </div>
+    <div id="ranking"></div>
+  </div>
+
+  <!-- 게임 -->
+  <div id="board"></div>
+
+  <div id="statusBar">
+    <span id="message"></span>
+    <button id="restartBtn" style="display:none;">다시하기</button>
+  </div>
+
+  <div id="keyboard"></div>
+
+  <script type="module" src="script.js"></script>
+</body>
+</html>
